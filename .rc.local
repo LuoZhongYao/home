@@ -1,0 +1,31 @@
+#!/bin/sh
+pkgs="vim tmux global\
+    gcc \
+    gcc-c++ gtk2-devel readline-devel\
+    clang wget"
+
+yum install $pkgs -y
+
+if [ ! -f "~/.tmux.conf" ];then
+    ln -s ~/public/home/.tmux.conf ~/
+fi
+
+if [ ! -d "~/public/vimrc" ];then
+    git clone https://github.com/luozhongyao/vimrc
+    ln -s ~/public/vimrc/.vimrc ~/
+    ln -s ~/public/vimrc/.vim/syntax ~/.vim/
+    ln -s ~/public/vimrc/.vim/colors ~/.vim/
+fi
+
+if [ ! -d "~/.vim/bundle" ];then
+    cd ~/.vim/
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+fi
+
+if [ ! -d "~/.vim/bundle/YouCompleteMe" ];then
+    cd ~/.vim/bundle
+    git clone https://github.com/Valloric/YouCompleteMe.git
+    cd YouCompleteMe/
+    git submodule update --init --recursive
+    ./install --clang-completer
+fi
