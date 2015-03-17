@@ -2,17 +2,20 @@
 pkgs="vim tmux global\
     gcc \
     gcc-c++ gtk2-devel readline-devel\
-    clang wget"
+    clang cmake python-devel pyOpenSSL wget svn"
 
-yum install $pkgs -y
+su -c "yum install $pkgs -y"
+mkdir -p ~/.vim
 
-if [ ! -f "~/.tmux.conf" ];then
+if [ ! -h "~/.tmux.conf" ];then
     ln -s ~/public/home/.tmux.conf ~/
 fi
 
 if [ ! -d "~/public/vimrc" ];then
-    git clone https://github.com/luozhongyao/vimrc
-    ln -s ~/public/vimrc/.vimrc ~/
+    git clone https://github.com/luozhongyao/vimrc ~/public/vimrc
+    if [ ! -h "~/.vimrc" ];then
+        ln -s ~/public/vimrc/.vimrc ~/
+    fi
     ln -s ~/public/vimrc/.vim/syntax ~/.vim/
     ln -s ~/public/vimrc/.vim/colors ~/.vim/
 fi
@@ -27,5 +30,5 @@ if [ ! -d "~/.vim/bundle/YouCompleteMe" ];then
     git clone https://github.com/Valloric/YouCompleteMe.git
     cd YouCompleteMe/
     git submodule update --init --recursive
-    ./install --clang-completer
+    ./install.sh --clang-completer -system-libclang
 fi
