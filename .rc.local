@@ -1,13 +1,13 @@
 #!/bin/sh
-repo=~/.repos
+repo=~/.public
 pkgs="vim tmux global\
     gcc flex bison re2c\
     gcc-c++ gtk2-devel readline-devel\
     clang cmake python-devel pyOpenSSL wget svn\
-    android_toolsi\
+    android-tools\
     p7zip convmv"
 
-su -c "yum install $pkgs -y"
+su -c "dnf install $pkgs -y"
 mkdir -p ~/.vim
 
 if [ ! -h "~/.tmux.conf" ];then
@@ -15,7 +15,7 @@ if [ ! -h "~/.tmux.conf" ];then
 fi
 
 if [ ! -d "~/public/vimrc" ];then
-    git clone https://github.com/luozhongyao/vimrc ~/public/vimrc
+    git clone https://github.com/luozhongyao/vimrc $repo/vimrc
     if [ ! -h "~/.vimrc" ];then
         ln -s $repo/vimrc/.vimrc ~/
     fi
@@ -33,7 +33,7 @@ if [ ! -d "~/.vim/bundle/YouCompleteMe" ];then
     git clone https://github.com/Valloric/YouCompleteMe.git
     cd YouCompleteMe/
     git submodule update --init --recursive
-    ./install.sh --clang-completer -system-libclang
+    ./install.sh --clang-completer --system-libclang
 fi
 
 # zip 乱码
