@@ -3,7 +3,7 @@ repo=~/.repos
 pkgs="vim tmux global\
     gcc flex bison re2c\
     gcc-c++ gtk2-devel readline-devel\
-    clang cmake python-devel pyOpenSSL wget svn\
+    clang cmake python-devel pyOpenSSL wget git\
     android_toolsi\
     p7zip convmv"
 
@@ -33,9 +33,11 @@ if [ ! -d "~/.vim/bundle/YouCompleteMe" ];then
     git clone https://github.com/Valloric/YouCompleteMe.git
     cd YouCompleteMe/
     git submodule update --init --recursive
-    ./install.sh --clang-completer -system-libclang
+    ./install.sh --clang-completer --system-libclang --racer-completer
 fi
 
 # zip 乱码
 # LANG=C 7za x your-zip-file.zip
 # convmv -f GBK -t utf8 --notest -r .
+
+#./configure --enable-disasm --enable-readline --enable-clgd54xx --enable-debugger --enable-ne2000 --enable-fpu 
